@@ -126,7 +126,7 @@ func init() {
 	rootCmd.Flags().StringVar(&config.POP3TLSCert, "pop3-tls-cert", config.POP3TLSCert, "Optional TLS certificate for POP3 server - requires pop3-tls-key")
 	rootCmd.Flags().StringVar(&config.POP3TLSKey, "pop3-tls-key", config.POP3TLSKey, "Optional TLS key for POP3 server - requires pop3-tls-cert")
 	rootCmd.Flags().BoolVar(&config.POP3NoDelete, "no-delete", false, "Do not delete messages from the mailbox")
-	
+
 	// Tagging
 	rootCmd.Flags().StringVarP(&config.CLITagsArg, "tag", "t", config.CLITagsArg, "Tag new messages matching filters")
 	rootCmd.Flags().StringVar(&config.TagsConfig, "tags-config", config.TagsConfig, "Load tags filters from yaml configuration file")
@@ -280,6 +280,9 @@ func initConfigFromEnv() {
 	config.POP3AuthFile = os.Getenv("MP_POP3_AUTH_FILE")
 	if err := auth.SetPOP3Auth(os.Getenv("MP_POP3_AUTH")); err != nil {
 		logger.Log().Errorf(err.Error())
+	}
+	if getEnabledFromEnv("MP_POP3_NO_DELETE") {
+		config.POP3NoDelete = true
 	}
 	config.POP3TLSCert = os.Getenv("MP_POP3_TLS_CERT")
 	config.POP3TLSKey = os.Getenv("MP_POP3_TLS_KEY")
