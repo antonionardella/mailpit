@@ -93,7 +93,7 @@ func handleClient(conn net.Conn) {
 
 	defer func() {
 		if state == UPDATE {
-			if len(toDelete) > 0 {
+			if len(toDelete) > 0 && !config.POP3NoDelete {
 				if err := storage.DeleteMessages(toDelete); err != nil {
 					logger.Log().Errorf("[pop3] error deleting: %s", err.Error())
 				}

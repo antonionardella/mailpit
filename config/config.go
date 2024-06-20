@@ -138,6 +138,9 @@ var (
 	// POP3TLSKey TLS certificate key
 	POP3TLSKey string
 
+	// POP3NoDelete - if set then Mailpit will not delete emails
+	POP3NoDelete bool
+
 	// EnableSpamAssassin must be either <host>:<port> or "postmark"
 	EnableSpamAssassin string
 
